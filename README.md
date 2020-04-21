@@ -8,12 +8,13 @@ Kong Ingress Controller + OpenFaas integration sample
   - [Deploy OpenFaas using arkade](#deploy-openfaas-using-arkade)
   - [Deploy Kong Ingress Controller](#deploy-kong-ingress-controller)
   - [Open OpenFaas Gateway](#open-openfaas-gateway)
+  - [Using faas-cli](#using-faas-cli)
 
 ## What you need
 
-- k3d
-- helm
-- kubectl
+- [k3d](https://github.com/rancher/k3d)
+- [Helm 3](https://helm.sh/docs/intro/install/) (MUST be Helm 3 at least)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [arkade](https://github.com/alexellis/arkade)
 
 ## What to do (k3d)
@@ -46,7 +47,7 @@ arkade install openfaas --load-balancer="false" --basic-auth-password "password"
 
 ### Deploy Kong Ingress Controller
 
-We need its helm chart and our custom ingress:
+We need Kong official helm chart and our custom ingress:
 
 ```sh
 helm repo add kong https://charts.konghq.com
@@ -66,7 +67,16 @@ Create an entry in `/etc/hosts`:
 
 ```
 127.0.0.1 	gateway.localdomain
-
 ```
 
 Open "http://gateway.localdomain:8080/ui/" in you browser and you are good to go.
+
+Try installing and invoking the **figlet** function from the store.
+
+### Using faas-cli
+
+```sh
+export OPENFAAS_URL=http://gateway.localdomain:8080
+faas-cli login --password password -u admin
+echo -n OpenFaaS | faas-cli invoke figlet
+```
