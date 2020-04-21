@@ -42,7 +42,7 @@ kubectl cluster-info
 ### Deploy OpenFaas using arkade
 
 ```sh
-arkade install openfaas --load-balancer="false" --basic-auth-password "password"
+arkade install openfaas --load-balancer="false" --basic-auth-password "password" --operator="true"
 ```
 
 ### Deploy Kong Ingress Controller
